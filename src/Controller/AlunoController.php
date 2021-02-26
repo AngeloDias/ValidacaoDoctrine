@@ -12,6 +12,35 @@ use App\Entity\Aluno;
 
 class AlunoController extends AbstractController
 {
+    public function consultarAluno(): Response
+    {}
+
+    public function removerAluno(): Response
+    {
+        $entityManager->remove($product);
+        $entityManager->flush();
+    }
+
+    /**
+     * @Route("/aluno/editar/{id}")
+     */
+    public function atualizarAluno(int $id): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $aluno = $entityManager->getRepository(Aluno::class)->find($id);
+
+        if (!$aluno) {
+            throw $this->createNotFoundException(
+                'Nenhum aluno encontrado com o id: '.$id
+            );
+        }
+
+        // $aluno->setNome('');
+        // $aluno->setDataNascimento();
+
+        $entityManager->flush();
+    }
+
     /**
      * @Route("/", name="aluno")
      */
