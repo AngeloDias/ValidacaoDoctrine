@@ -4,12 +4,24 @@
 
 {% block body %}
 
-<form name="form_cadastro" method="post" action="{{path('cadastrar')}}">
-    <div>
-        <input type="text" name="nome" placeholder="Seu nome" required>
-        <input type="date" name="nascimento" placeholder="Sua data de nascimento">
-        <button type="submit">Registrar</button>
+    <div class="container">
+        <div class="row">
+            <div class="input-field col s12 input-to-blank">
+                <form name="form_cadastro" method="post" action="{{path('cadastrar')}}" class="col s12 m12">
+                    <input type="text" name="nome" placeholder="Nome do aluno">
+                    <input type="text" name="curso" placeholder="Curso do aluno">
+                    <button type="submit" class="btn col s12">Registrar</button>
+                </form>
+            </div>
+        </div>
     </div>
-</form>
+
+    {% if errors %}
+        <ul class="alert alert-danger">
+            {% for error in errors %}
+                <li>{{error.message}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
 {% endblock %}

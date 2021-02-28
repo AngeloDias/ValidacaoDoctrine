@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AlunoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AlunoRepository::class)
@@ -19,13 +20,15 @@ class Aluno
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="O nome deve ser preenchido!")
      */
     private $Nome;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Informe o curso do aluno!")
      */
-    private $Data_nascimento;
+    private $curso;
 
     public function getId(): ?int
     {
@@ -44,14 +47,14 @@ class Aluno
         return $this;
     }
 
-    public function getDataNascimento(): ?\DateTimeInterface
+    public function getCurso(): ?string
     {
-        return $this->Data_nascimento;
+        return $this->curso;
     }
 
-    public function setDataNascimento(?\DateTimeInterface $Data_nascimento): self
+    public function setCurso(string $curso): self
     {
-        $this->Data_nascimento = $Data_nascimento;
+        $this->curso = $curso;
 
         return $this;
     }

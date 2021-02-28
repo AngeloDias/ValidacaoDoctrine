@@ -7,40 +7,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 use App\Entity\Aluno;
 
 class AlunoController extends AbstractController
 {
-    public function consultarAluno(): Response
-    {}
-
-    public function removerAluno(): Response
-    {
-        $entityManager->remove($product);
-        $entityManager->flush();
-    }
-
-    /**
-     * @Route("/aluno/editar/{id}")
-     */
-    public function atualizarAluno(int $id): Response
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $aluno = $entityManager->getRepository(Aluno::class)->find($id);
-
-        if (!$aluno) {
-            throw $this->createNotFoundException(
-                'Nenhum aluno encontrado com o id: '.$id
-            );
-        }
-
-        // $aluno->setNome('');
-        // $aluno->setDataNascimento();
-
-        $entityManager->flush();
-    }
-
     /**
      * @Route("/", name="aluno")
      */
@@ -48,31 +20,36 @@ class AlunoController extends AbstractController
     {
         return $this->render('aluno/index.html.twig', [
             'controller_name' => 'AlunoController',
+            'errors' => ''
         ]);
     }
 
     /**
      * @Route("/cadastrar", name="cadastrar")
      */
-    public function cadastrar(Request $request): Response
+    public function cadastrar(ValidatorInterface $validator, Request $request): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
 
         $nome = $request->request->get('nome');
-        $nascimento = $request->request->get('nascimento');
+        $curso = $request->request->get('curso');
 
         $aluno = new Aluno();
         $aluno->setNome($nome);
-        $aluno->setDataNascimento(\DateTime::createFromFormat('Y-m-d', $nascimento));
+        $aluno->setCurso($curso);
+
+        $erros = $validator->validate($aluno);
+
+        if(count($erros) > 0) {
+            return $this->render('aluno/index.html.twig', [
+                'errors' => $erros
+            ]);
+        }
 
         $entityManager->persist($aluno);
 
         $entityManager->flush();
 
         return new Response('O aluno foi cadastrado com ID: '.$aluno->getId());
-
-        // return $this->render('aluno/index.html.twig', [
-        //     'controller_name' => 'AlunoController',
-        // ]);
     }
 }
