@@ -3,8 +3,32 @@
 {% block title %}Listar alunos{% endblock %}
 
 {% block body %}
+    <h1>Listar alunos</h1>
 
-<div>
-</div>
-
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Curso</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for aluno in alunos %}
+            <tr>
+                <td>{{ aluno.id }}</td>
+                <td>{{ aluno.Nome }}</td>
+                <td>{{ aluno.curso }}</td>
+                <td>
+                    <a href="{{ path('aluno_editar', {'id': aluno.id}) }}">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Nenhum aluno cadastrado</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

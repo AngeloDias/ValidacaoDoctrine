@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Aluno{% endblock %}
+
+{% block body %}
+    <h1>Aluno</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ aluno.id }}</td>
+            </tr>
+            <tr>
+                <th>Nome</th>
+                <td>{{ aluno.Nome }}</td>
+            </tr>
+            <tr>
+                <th>Curso</th>
+                <td>{{ aluno.curso }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}
