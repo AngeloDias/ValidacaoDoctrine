@@ -19,6 +19,12 @@
                 <th>Curso</th>
                 <td>{{ aluno.curso }}</td>
             </tr>
+            <tr>
+                <td>
+                    <a href="{{ path('aluno_editar', {'id': aluno.id}) }}">Editar</a>
+                    <a href="{{ path('aluno_remover', {'id': aluno.id}) }}">Remover</a>
+                </td>
+            </tr>
         </tbody>
     </table>
 

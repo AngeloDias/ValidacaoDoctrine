@@ -14,6 +14,21 @@ use App\Entity\Aluno;
 
 class AlunoController extends AbstractController
 {
+
+    /**
+     * @Route("/aluno/remover/{id}", name="aluno_remover")
+     */
+    public function delete(int $id): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $aluno = $entityManager->getRepository(Aluno::class)->find($id);
+
+        $entityManager->remove($aluno);
+        $entityManager->flush();
+
+        return new Response('Aluno de ID \"'.$product->getId().'\" removido.');
+    }
+
      /**
      * @Route("/aluno/editar/{id}", name="aluno_editar")
      */

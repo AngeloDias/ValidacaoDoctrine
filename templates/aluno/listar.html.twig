@@ -22,6 +22,7 @@
                 <td>{{ aluno.curso }}</td>
                 <td>
                     <a href="{{ path('aluno_editar', {'id': aluno.id}) }}">Editar</a>
+                    <a href="{{ path('aluno_remover', {'id': aluno.id}) }}">Remover</a>
                 </td>
             </tr>
         {% else %}
