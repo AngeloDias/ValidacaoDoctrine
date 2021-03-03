@@ -23,10 +23,14 @@ class AlunoController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $aluno = $entityManager->getRepository(Aluno::class)->find($id);
 
+        $id = $aluno->getId();
+
         $entityManager->remove($aluno);
         $entityManager->flush();
 
-        return new Response('Aluno de ID \"'.$product->getId().'\" removido.');
+        // return new Response('Aluno de ID "'.$id.'" removido.');
+
+        return $this->redirectToRoute('listar_alunos');
     }
 
      /**
@@ -46,10 +50,6 @@ class AlunoController extends AbstractController
             $entityManager->flush();
 
             return new Response('O aluno foi atualizado com nome: '.$aluno->getNome());
-
-            // return $this->redirectToRoute('aluno_show', [
-            //     'id' => $aluno->getId()
-            // ]);
         }
 
         $form = $this->createForm(AlunoType::class, $aluno);
@@ -76,11 +76,9 @@ class AlunoController extends AbstractController
             );
         }
 
-        return new Response('O nome do aluno selecionado: '.$aluno->getNome());
+        return $this->redirectToRoute('listar_alunos');
 
-        // return $this->render('aluno/show.html.twig', [
-        //     'aluno' => $aluno,
-        // ]);
+        // return new Response('O nome do aluno selecionado: '.$aluno->getNome());
     }
 
     /**
@@ -133,6 +131,8 @@ class AlunoController extends AbstractController
 
         $entityManager->flush();
 
-        return new Response('O aluno foi cadastrado com ID: '.$aluno->getId());
+        return $this->redirectToRoute('listar_alunos');
+
+        // return new Response('O aluno foi cadastrado com ID: '.$aluno->getId());
     }
 }
