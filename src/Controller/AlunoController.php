@@ -23,12 +23,8 @@ class AlunoController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $aluno = $entityManager->getRepository(Aluno::class)->find($id);
 
-        $id = $aluno->getId();
-
         $entityManager->remove($aluno);
         $entityManager->flush();
-
-        // return new Response('Aluno de ID "'.$id.'" removido.');
 
         return $this->redirectToRoute('listar_alunos');
     }
